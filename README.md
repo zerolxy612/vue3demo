@@ -5,3 +5,18 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+项目构建的步骤
+
+npm init vite@latest vue3demo -- --template vue
+vue add @vue/cli-plugin-eslint
+npm install vue-router@4
+npm install vuex@next --save
+npm install element-plus --save
+npm install axios //mani.js vite.config.js
+npm install animate.css --save
+
+如果从 gitee 下载该项目后,执行以下执行即可
+cd vue3demo
+npm install
+npm run dev
