@@ -1,20 +1,35 @@
 <script setup>
-import { Avatar, View } from "@element-plus/icons-vue"
+import { Avatar, View } from '@element-plus/icons-vue'
+import { reactive } from 'vue'
+
+const user = reactive({})
+
+const login = () => {
+  console.log(user)
+}
 </script>
 
 <template>
   <div class="login-content">
     <div class="modal">
-      <el-form>
+      <el-form :model="user">
         <div class="login-title">登录</div>
         <el-form-item>
-          <el-input type="text" :prefix-icon="Avatar"></el-input>
+          <el-input
+            type="text"
+            :prefix-icon="Avatar"
+            v-model="user.name"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-input type="password" :prefix-icon="View"></el-input>
+          <el-input
+            type="password"
+            :prefix-icon="View"
+            v-model="user.password"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btm">登录</el-button>
+          <el-button type="primary" class="login-btm" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
