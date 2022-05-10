@@ -1,7 +1,9 @@
 <script setup>
 import { Avatar, View } from "@element-plus/icons-vue";
-import { reactive } from "vue";
-const user = reactive({});
+import { reactive,ref } from "vue";
+import userApi from '../api/userApi'
+const user = reactive({})
+const loginForm = ref(null)
 
 // 定义校验规则
 const rules = reactive({
@@ -10,25 +12,34 @@ const rules = reactive({
       required: true,
       message: "用户名不能为空",
       trigger: "blur",
-    },
+    }
   ],
   password: [
     {
       required: true,
       message: "密码不能为空",
       trigger: "blur",
-    },
+    }
   ],
 });
 const login = () => {
-  console.log(user);
-}
+  // 进行提交前的校验
+  loginForm.value.validate((valid) => {
+    if (valid) {
+      userApi.login(user).then((res) => {
+        console.log(res)
+      })
+    } else {
+      return false
+    }
+  })
+};
 </script>
 
 <template>
   <div class="login-content">
     <div class="modal">
-      <el-form :model="user" :rules="rules" status-icon>
+      <el-form :model="user" :rules="rules" status-icon ref="loginForm">
         <div class="login-title">登录</div>
         <el-form-item prop="username">
           <el-input
