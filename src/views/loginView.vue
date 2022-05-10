@@ -1,27 +1,43 @@
 <script setup>
-import { Avatar, View } from '@element-plus/icons-vue'
-import { reactive } from 'vue'
+import { Avatar, View } from "@element-plus/icons-vue";
+import { reactive } from "vue";
+const user = reactive({});
 
-const user = reactive({})
-
+// 定义校验规则
+const rules = reactive({
+  username: [
+    {
+      required: true,
+      message: "用户名不能为空",
+      trigger: "blur",
+    },
+  ],
+  password: [
+    {
+      required: true,
+      message: "密码不能为空",
+      trigger: "blur",
+    },
+  ],
+});
 const login = () => {
-  console.log(user)
+  console.log(user);
 }
 </script>
 
 <template>
   <div class="login-content">
     <div class="modal">
-      <el-form :model="user">
+      <el-form :model="user" :rules="rules" status-icon>
         <div class="login-title">登录</div>
-        <el-form-item>
+        <el-form-item prop="username">
           <el-input
             type="text"
             :prefix-icon="Avatar"
             v-model="user.name"
           ></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="password">
           <el-input
             type="password"
             :prefix-icon="View"
@@ -29,7 +45,9 @@ const login = () => {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btm" @click="login">登录</el-button>
+          <el-button type="primary" class="login-btm" @click="login"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
