@@ -1,5 +1,5 @@
 import request from '../utils/request'
 
 export default {
-  login: data => request.length('user/login', data)
+  login: data => request.get('user/login', data)
 }

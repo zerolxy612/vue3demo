@@ -11,6 +11,8 @@ const app = createApp(App)
 // for (const iconName in ElIconModules) {
 //   app.component(iconName, ElIconModules[iconName])
 // }
+// 将router设置为全局属性
+app.config.globalProperties.$router = router
 app.use(router)
 app.use(store)
 app.mount('#app')

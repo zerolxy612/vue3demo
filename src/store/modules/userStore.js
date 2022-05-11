@@ -4,14 +4,13 @@ const userStore = {
   namespaced: true,
   state: () => {
     return {
-      username: 'haoren',
-      age: 23
+      userInfo: '' || storage.getItem('userinfo')
     }
   },
   mutations: {
-    changeUserName: (state, params) => {
-      storage.setItem('username', params)
-      state.username = params
+    saveUserInfoCommit: (state, params) => {
+      storage.setItem('userinfo', params)
+      state.userInfo = params
     }
   },
   getters: {
@@ -20,7 +19,9 @@ const userStore = {
     }
   },
   actions: {
-
+    saveUserInfoAction: (store, params) => {
+      store.commit('saveUserInfoCommit', params)
+    }
   }
 }
 export default userStore

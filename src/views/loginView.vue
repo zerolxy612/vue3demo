@@ -1,8 +1,13 @@
 <script setup>
-import { Avatar, View } from "@element-plus/icons-vue";
-import { reactive,ref } from "vue";
+import { Avatar, View } from '@element-plus/icons-vue'
+import { reactive, ref, getCurrentInstance } from 'vue'
+import { useStore } from 'vuex'
 import userApi from '../api/userApi'
+
+const { proxy } = getCurrentInstance()
+
 const user = reactive({})
+const store = useStore()
 const loginForm = ref(null)
 
 // 定义校验规则
@@ -10,30 +15,33 @@ const rules = reactive({
   username: [
     {
       required: true,
-      message: "用户名不能为空",
-      trigger: "blur",
+      message: '用户名不能为空',
+      trigger: 'blur'
     }
   ],
   password: [
     {
       required: true,
-      message: "密码不能为空",
-      trigger: "blur",
+      message: '密码不能为空',
+      trigger: 'blur'
     }
-  ],
-});
+  ]
+})
 const login = () => {
   // 进行提交前的校验
   loginForm.value.validate((valid) => {
     if (valid) {
       userApi.login(user).then((res) => {
-        console.log(res)
+        // vuex管理
+        store.dispatch('userStore/saveUserInfoAction', res)
+        // 跳转路由
+        proxy.$router.push('/')
       })
     } else {
       return false
     }
   })
-};
+}
 </script>
 
 <template>
@@ -45,7 +53,7 @@ const login = () => {
           <el-input
             type="text"
             :prefix-icon="Avatar"
-            v-model="user.name"
+            v-model="user.username"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -56,7 +64,7 @@ const login = () => {
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="login-btm" @click="login"
+          <el-button type="primary" class="login-btn" @click="login"
             >登录</el-button
           >
         </el-form-item>
@@ -87,7 +95,7 @@ const login = () => {
   text-align: center;
   margin-bottom: 15px;
 }
-.login-content .login-btm {
+.login-content .login-btn {
   width: 100%;
 }
 </style>
